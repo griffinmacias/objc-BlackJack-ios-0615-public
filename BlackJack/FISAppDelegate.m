@@ -7,7 +7,7 @@
 //
 
 #import "FISAppDelegate.h"
-
+#import "FISBlackjackGame.h"
 @implementation FISAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -16,6 +16,31 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    FISBlackjackGame *blackJack = [[FISBlackjackGame alloc] init];
+    
+    [blackJack deal];
+    
+    while (![blackJack isBusted] && [blackJack isBlackjack]) {
+        
+        [blackJack hit];
+        
+    }
+    
+    NSMutableString *finalHand = [[NSMutableString alloc] init];
+    
+    for (FISPlayingCard *card in blackJack.hand) {
+        NSLog(@"%@ %@", card.suit, card.rank);
+        
+        [finalHand appendFormat:@"Suit:%@ Rank:%@\n", card.suit, card.rank];
+    }
+    
+    
+    NSLog(@"%@", finalHand);
+    
+    
+    
+    
     return YES;
 }
 
